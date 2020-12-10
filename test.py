@@ -18,14 +18,17 @@ def getLogNames():
 @app.route('/upload', methods=["GET", "POST"])
 def upload():
     if request.method == "GET":
-        return render_template('hello.html')
+        return render_template('upload.html', message="")
     elif request.method == "POST":
         f = request.files["logfile"]
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
-        return render_template('upload.html')
+        if f.filename in getLogNames():
+            message = "Не удалось заргузить лог " + f.filename + ", лог с таким именем существует "
+        else:
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+            message = "Лог " + f.filename + " успешно загружен"
+        return render_template("upload.html", message=message)
 
-
-@app.route('/')
+@app.route('/<logName>')
 def main():
     logList = getLogNames()
     return render_template('index.html', logList=logList)

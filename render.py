@@ -1,9 +1,8 @@
 #Создает html-таблицу из файла
 SPLITTER = [[0, 18],[21, 48], [48, 57]]
-NUM_LINES_ON_PAGE = 100
 
 #path-путь до файла
-def render_table(path, i=1):
+def render_table(path):
     with open(path) as file_handler:
         outHtml = "<table>"
         for line in file_handler:
