@@ -1,13 +1,19 @@
+#Импортируем модуль os, для работы с директориями и путями  
 import os
-#Создает html-таблицу из файла
-SPLITTER = [[0, 19],[21, 45], [46, 57]]
+
+
+SPLITTER = [[0, 19],[21, 40], [42, 48]]
 MAX_NUM_ROWS = 100
 
 
-
-
+#Превращаем необработанную строку в сроку Html,
 def line2htmlRow(line):
-    if len(line) > 57:
+    #Если строка меньше 57, то скорее всего там только сообщение
+    if len(line) < 57:
+        pass
+        return "<tr><td></td><td></td><td></td><td>"+line+"</td></tr>\n"
+    #Иначе делим на столбцы, используя информацию из сплиттера
+    else:    
         S = SPLITTER
         outline = "<tr>"
         for i in range(0,len(S)):
@@ -20,10 +26,7 @@ def line2htmlRow(line):
 
 
 def buildFileSplit(path):
-    basename = os.path.basename(path).replace(".","_")
-    dirname = os.path.dirname(path)
-
-    new_path = os.path.join(dirname, basename)
+    new_path = translatePath(path)
 
     if os.path.exists(new_path) and os.path.isdir(new_path):
         return True
@@ -34,20 +37,49 @@ def buildFileSplit(path):
 
     with open(path) as file_handler:
         line = "test"
+        startPoint = findStartPoint(file_handler)
+        file_handler.seek(startPoint)
         while line != "":
             with open(os.path.join(new_path, str(page_num)+".tmp"), "w") as new_file:
                 for _ in range(0, MAX_NUM_ROWS): 
-                    line = file_handler.readline()
+                    line = getLine(file_handler)
+                    if line == "": break
                     new_line = line2htmlRow(line)
                     new_file.write(new_line)
+
                 page_num += 1
 
 
 def getPage(path, page):
-    basename = os.path.basename(path).replace(".","_")
-    dirname = os.path.dirname(path)
-
-    new_path = os.path.join(dirname, basename)
+    new_path = translatePath(path)
 
     with open(os.path.join(new_path, str(page)+".tmp"), "r") as f:
         return f.read()
+
+        
+
+
+
+def translatePath(path):
+    basename = os.path.basename(path).replace(".","_")
+    dirname = os.path.dirname(path)
+    new_path = os.path.join(dirname, basename)
+    return new_path
+
+
+def getLine(file_handler):
+    ch = file_handler.read(1)
+    line = ""
+    while ch != "" and ch != "\n":
+        line += ch
+        ch = file_handler.read(1)
+    return line
+
+
+def findStartPoint(file_handler):
+    ch = file_handler.read(1)
+    startByte = 0
+    while not ch.isdigit():
+        ch = file_handler.read(1)
+        startByte += 1
+    return startByte
