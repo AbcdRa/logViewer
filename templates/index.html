@@ -3,7 +3,7 @@
 {% block body %}
     <ul>
         {% for logName in logList %}
-          <li><a href="{{ '/' + logName}}">{{ logName }}</a></li>
+          <li><a href="{{ '/logs/' + logName + '/1'}}">{{ logName }}</a></li>
         {% endfor %}
           <li><a href="/upload">Загрузить новый</a></li>
         </ul>

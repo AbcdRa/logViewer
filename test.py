@@ -1,17 +1,27 @@
 from flask import Flask, render_template, request, get_template_attribute, url_for
 from werkzeug.utils import secure_filename
 import os
-from render import render_table
+from render import buildFileSplit, getPage
 
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.dirname(os.path.abspath(__file__))+"//upload"
 
 
-
+@app.route("/")
+def index():
+    return render_template("index.html", logList=getLogNames())
 
 def getLogNames():
-    return os.listdir(app.config['UPLOAD_FOLDER'])
+    def filterfunc(x):
+        if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'],x)):
+            return 1
+        else:
+            return 0
+    
+    files =  os.listdir(app.config['UPLOAD_FOLDER'])
+    f_files = filter(filterfunc, files)
+    return list(f_files)
 
 
 
@@ -24,14 +34,21 @@ def upload():
         if f.filename in getLogNames():
             message = "Не удалось заргузить лог " + f.filename + ", лог с таким именем существует "
         else:
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+            new_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename))
+            f.save(new_path)
             message = "Лог " + f.filename + " успешно загружен"
+            buildFileSplit(new_path)
         return render_template("upload.html", message=message)
 
-@app.route('/<logName>')
-def main():
-    logList = getLogNames()
-    return render_template('index.html', logList=logList)
+
+
+@app.route('/logs/<logName>/<int:page>')
+def logView(logName, page):
+    logHtml = getPage(os.path.join(app.config['UPLOAD_FOLDER'], logName), page)
+    return render_template('log_view.html', logName=logName, logHtml=logHtml)
+
+
+
 
 
 
