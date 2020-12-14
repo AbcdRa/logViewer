@@ -37,7 +37,9 @@ def upload():
 def logView(logName, page):
     logHtml = getPage(os.path.join(app.config['UPLOAD_FOLDER'], logName), page)
     nOP = getNumberOfPages(logName)
-    return render_template('log_view.html', logName=logName, logHtml=logHtml, numOfPages=nOP)
+    pSR = pageSelectorRange(page, nOP)
+    logInfo = {"logHtml":logHtml, "numOfPages":nOP, "logName":logName, "currentPage":page, "pSR":pSR}
+    return render_template('log_view.html', logInfo=logInfo)
 
 
 
@@ -58,6 +60,16 @@ def getLogNames():
 def getNumberOfPages(logName):
    new_path = translatePath(os.path.join(app.config['UPLOAD_FOLDER'], logName))
    return len(os.listdir(new_path))
+
+
+def pageSelectorRange(currentPage, numOfPages):
+    DEFAULT_RANGE = 5
+
+    startPoint = currentPage-DEFAULT_RANGE
+    startPoint = startPoint if startPoint>1 else 1
+    endPoint = currentPage+DEFAULT_RANGE
+    endPoint = endPoint if endPoint<numOfPages else numOfPages
+    return range(startPoint, endPoint+1)
 
 
 if __name__ == '__main__':

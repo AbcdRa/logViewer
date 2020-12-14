@@ -1,11 +1,12 @@
 {% extends "base.html" %}
-{% block title %}{{logName}}{% endblock %}
+{% block title %}{{logInfo["logName"]}}{% endblock %}
 {% block body %}
-    <table><tbody>{{logHtml | safe}}</tbody></table>
-    <table><tbody><tr>
-        {% for i in range(1, numOfPages+1) %}
-        <tc><a href="{{'/logs/' + logName + '/' + i|string}}">{{i}}</a></tc>
-        {% endfor %}
-    </tr></tbody></table>
+    <table><tbody>{{logInfo["logHtml"] | safe}}</tbody></table>
+    <br>
+    <div class="row">
+    {% for i in logInfo["pSR"] %}
+        <div class="col s1"><a href="{{'/logs/' + logInfo['logName'] + '/' + i|string}}">{{i}}</a></div>
+    {% endfor %}
+    </div>
     <a href="/">Вернуться на главную</a>
 {% endblock %}
