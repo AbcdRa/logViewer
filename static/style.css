@@ -21,3 +21,19 @@
 .tp {
     color: #ab08d4
 }
+
+.p-1 {
+    padding: 1px 1px;
+}
+
+.c0 {
+    width: 10rem;
+}
+
+.c1 {
+    width: 1rem;
+}
+
+.c2 {
+    width: 1rem;
+}

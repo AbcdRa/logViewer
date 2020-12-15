@@ -9,7 +9,7 @@ MAX_NUM_ROWS = 100
 #Превращаем необработанную строку в сроку Html,
 def line2htmlRow(line):
     #Если строка меньше 57, то скорее всего там только сообщение
-    if len(line) < 57:
+    if len(line) < 57 or line[0]=="[":
         pass
         return "<tr><td></td><td></td><td></td><td>"+line+"</td></tr>\n"
     #Иначе делим на столбцы, используя информацию из сплиттера
@@ -17,7 +17,7 @@ def line2htmlRow(line):
         S = SPLITTER
         outline = "<tr>"
         for i in range(0,len(S)):
-            outline += "<td>" + line[S[i][0]:S[i][1]].strip() + "</td>"
+            outline += '<td class="c'+str(i)+'">' + line[S[i][0]:S[i][1]].strip() + "</td>"
         #Последний столбец не имеет фиксированной длины и идет до конца
         outline += "<td>" + line[S[len(S)-1][1]:].strip() + "</td></tr>\n"
         return outline

@@ -87,7 +87,7 @@ def getNumberOfPages(logName):
 
 #Вернуть page selector
 def pageSelectorRange(currentPage, numOfPages):
-    DEFAULT_RANGE = 5
+    DEFAULT_RANGE = 3
 
     startPoint = currentPage-DEFAULT_RANGE
     startPoint = startPoint if startPoint>1 else 1

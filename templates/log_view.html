@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 {% block title %}{{logInfo["logName"]}}{% endblock %}
 {% block body %}
-    <table><tbody>{{logInfo["logHtml"] | safe}}</tbody></table>
+    <table class="p-1"><tbody>{{logInfo["logHtml"] | safe}}</tbody></table>
     <br>
     <div class="row">
+    {% if 1 not in logInfo["pSR"] %}
+        <div class="col s1 mt">
+            <a class="tb" 
+            href="{{'/logs/' + logInfo['logName'] + '/' + 1|string}}">1</a>
+        </div>
+        <div class="col s1 mt">...</div>
+
+    {% endif %}
     {% for i in logInfo["pSR"] %}
         {% if i == logInfo["currentPage"] %}
             <div class="col s1 mt"><a href="{{'/logs/' + logInfo['logName'] + '/' + i|string}}">{{i}}</a></div>
@@ -12,6 +20,16 @@
         {% endif %}
         
     {% endfor %}
+        
+    {% if logInfo['numOfPages'] not in logInfo["pSR"] %}
+        <div class="col s1 mt">...</div>
+        <div class="col s1 mt">
+            <a class="tb" 
+            href="{{'/logs/' + logInfo['logName'] + '/' + logInfo['numOfPages']|string}}">
+            {{logInfo['numOfPages']}}
+            </a>
+        </div>
+    {% endif %}
         <div class="col s1">
 
             <input id="pageSelect" type="number" />
