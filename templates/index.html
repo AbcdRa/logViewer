@@ -2,9 +2,8 @@
 {% block title %}Выбор лога {% endblock %}
 {% block body %}
     <ul>
-        {% for logName in logList %}
-          <li><a href="{{ '/logs/' + logName + '/1'}}">{{ logName }}</a></li>
-        {% endfor %}
-          <li><a href="/upload">Загрузить новый</a></li>
-        </ul>
+      {% for logName in logList %}
+        <li class="ml"><h5><a class="tp" href="{{ '/logs/' + logName + '/1'}}">{{ logName }}</a></h5></li>
+      {% endfor %}
+    </ul>
 {% endblock %}

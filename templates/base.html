@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <!-- link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}" -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"> 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}" >
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <title>{% block title %}{% endblock %}</title>
+    {% block head %}
     {% endblock %}
 </head>
 <body>
     <nav>
         <div class="nav-wrapper">
-          <a href="#" class="ml-2">Log Viewer</a>
+          <a href="/" class="ml">Log Viewer</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="\">Выбор лога</a></li>
             <li><a href="\upload">Загрузить лог</a></li>
-            <li><a href="\revative">Просмотр</a></li>
+            <li><a href="\relative">Просмотр</a></li>
           </ul>
         </div>
       </nav>
     {% block body %}
     {% endblock %}
+    <footer><div class="footer-copyright ">
+      <div class="grey-text mt-3 ml">
+      2020 <a href="https://vk.com/lena_skv2001">Елена Скворцова</a>
+      </div>
+    </div></footer>
 </body>
 </html>

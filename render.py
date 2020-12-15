@@ -25,6 +25,7 @@ def line2htmlRow(line):
 
 
 
+#Делим лог на страницы
 def buildFileSplit(path):
     new_path = translatePath(path)
 
@@ -50,6 +51,7 @@ def buildFileSplit(path):
                 page_num += 1
 
 
+#Вернуть страницу лога
 def getPage(path, page):
     new_path = translatePath(path)
 
@@ -57,9 +59,7 @@ def getPage(path, page):
         return f.read()
 
         
-
-
-
+#Преобразовать из имени лога, путь до папки с обработанными страницами
 def translatePath(path):
     basename = os.path.basename(path).replace(".","_")
     dirname = os.path.dirname(path)
@@ -67,6 +67,7 @@ def translatePath(path):
     return new_path
 
 
+#Получить строку из файла
 def getLine(file_handler):
     ch = file_handler.read(1)
     line = ""
@@ -76,6 +77,7 @@ def getLine(file_handler):
     return line
 
 
+#Получить начало лога, некоторые логи читают с начала мусорные байты
 def findStartPoint(file_handler):
     ch = file_handler.read(1)
     startByte = 0

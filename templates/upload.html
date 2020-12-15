@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лог</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-</head>
-<body>
-    <h3>Загрузить лог</h3>
-    <form action="" method=post enctype=multipart/form-data>
-        <input name="logfile" type="file" /><p>
-        <button type="submit" name="submit">Загрузить</button>
+{% extends "base.html" %}
+{% block title %}Загрузить лог{% endblock %}
+{% block body %}
+    <h3 class="ml">Выберите лог</h3>
+    <form action="" method=post enctype=multipart/form-data class="ml">
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>Файл</span>
+                <input name="logfile" type="file" />
+            </div>
+            <div class="file-path-wrapper mr-5">
+                <input class="file-path validate" type="text">
+            </div>         
+       
+        </div>
+        <br>
+        <button class="btn waves-effect waves-light" type="submit" name="submit">Загрузить</button>
     </form>
-    <a href="/">Вернуться на главную</a>
     <div>{{message}}</div>
-</body>
-</html>
+{% endblock %}
+

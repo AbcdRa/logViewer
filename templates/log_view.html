@@ -5,8 +5,19 @@
     <br>
     <div class="row">
     {% for i in logInfo["pSR"] %}
-        <div class="col s1"><a href="{{'/logs/' + logInfo['logName'] + '/' + i|string}}">{{i}}</a></div>
+        {% if i == logInfo["currentPage"] %}
+            <div class="col s1 mt"><a href="{{'/logs/' + logInfo['logName'] + '/' + i|string}}">{{i}}</a></div>
+        {% else %}
+            <div class="col s1 mt"><a class="tb" href="{{'/logs/' + logInfo['logName'] + '/' + i|string}}">{{i}}</a></div>
+        {% endif %}
+        
     {% endfor %}
+        <div class="col s1">
+
+            <input id="pageSelect" type="number" />
+        </div>  
     </div>
     <a href="/">Вернуться на главную</a>
+    <script src="{{ url_for('static', filename='pageSelect.js') }}"></script> 
+
 {% endblock %}
